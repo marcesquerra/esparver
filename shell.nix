@@ -6,12 +6,8 @@ let
   pkgs = import sources.nixpkgs { inherit overlays ; config = { allowUnfree = true;}; };
 in
 let
-  rustChannel = (pkgs.rust-bin.stable."1.67.1");
+  rustChannel = (pkgs.rust-bin.stable."1.69.0");
   rustPackage = rustChannel.default;
-    # let
-    #   superRust = rustChannel.rust;
-    # in
-    #   superRust.override{targets = [(pkgs.rust.toRustTarget pkgs.stdenv.targetPlatform) "wasm32-unknown-unknown"];}; # {targets = [pkgs.stdenv.targetPlatform];};
   rust-src = rustChannel.rust-src;
   rustPlatform = pkgs.makeRustPlatform{
       cargo = rustPackage;
@@ -38,7 +34,15 @@ let
     src = sources.rust-analyzer;
     cargoSha256 = "sha256-gmFgGYt2aSxz5mBQqr5yCc36ZzcRXpeWjD3RZGk281A=";
   };
+  bacon = getFromCargo {
+    src = sources.bacon;
+    cargoSha256 = "sha256-6eLsj7YY5bVNw6UeLleiftFr5zJh+9b7vrdv7ivBvlw=";
+  };
   niv = ((import sources.niv) {}).niv;
+  cargo-watch = getFromCargo {
+    src = sources.cargo-watch;
+    cargoSha256 = "sha256-C4uqNMyMQLbU3pBiVAoJriYwQ6q+HmodiOyxEFsVWQI=";
+  };
 in
   pkgs.mkShell {
     name = "polymono-shell";
@@ -46,6 +50,8 @@ in
       niv
       rustPackage
       rust-analyzer
+      bacon
+      cargo-watch
     ];
     shellHook = ''
       export RUST_SRC_PATH="${rust-src}/lib/rustlib/src/rust/library"

@@ -1,4 +1,16 @@
 {
+    "bacon": {
+        "branch": "main",
+        "description": "background rust code check",
+        "homepage": "https://dystroy.org/bacon",
+        "owner": "Canop",
+        "repo": "bacon",
+        "rev": "972cbb3b7bfea69688a4fefb6f124a2c630bf999",
+        "sha256": "0f9mgl0khxc73k5l1mn2zkc462v6a7jgvnqjmnvpz38sf3y7hh5a",
+        "type": "tarball",
+        "url": "https://github.com/Canop/bacon/archive/972cbb3b7bfea69688a4fefb6f124a2c630bf999.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "niv": {
         "branch": "master",
         "description": "Easy dependency management for Nix projects",
@@ -23,6 +35,19 @@
         "url": "https://github.com/NixOS/nixpkgs/archive/dbe7211a802a8798420c753ce181578653d31be7.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "cargo-watch": {
+        "branch": "8.x",
+        "description": "Watches over your Cargo project's source.",
+        "homepage": "https://watchexec.github.io/#cargo-watch",
+        "owner": "watchexec",
+        "repo": "cargo-watch",
+        "rev": "b905a3f982f21fcea5cb643f0dad073a0cac4b24",
+        "sha256": "1swvk8yb320q90vg434w2z428iy4b2pbxnv12l5sbm0vlinqwfq7",
+        "type": "tarball",
+        "url": "https://github.com/watchexec/cargo-watch/archive/b905a3f982f21fcea5cb643f0dad073a0cac4b24.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz",
+        "version": "v8.4.0"
+    },
     "rust-analyzer": {
         "branch": "master",
         "description": "A Rust compiler front-end for IDEs",
@@ -41,10 +66,10 @@
         "homepage": "",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "9cfdc72e60fde874819045b563fc1523dc99afe0",
-        "sha256": "15sgkq6m07w4af0sjxnyl37jrp620bh2zlyl5dqvqdvmxnkac7ix",
+        "rev": "9651f0beee6e7a9783cc02eac722854851c65ae7",
+        "sha256": "1g9zqcjyszniyn3zz2vikn90l76wfav03nfjbhwdr8zwwc5hpb1z",
         "type": "tarball",
-        "url": "https://github.com/oxalica/rust-overlay/archive/9cfdc72e60fde874819045b563fc1523dc99afe0.tar.gz",
+        "url": "https://github.com/oxalica/rust-overlay/archive/9651f0beee6e7a9783cc02eac722854851c65ae7.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }
