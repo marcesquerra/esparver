@@ -1,8 +1,18 @@
 [package]
-name = "polymono"
-version = "0.1.0"
+name = "esparver"
+version = "0.0.1"
 edition = "2021"
+license = "MIT"
+description = "A highly opinionated wrapper around git that works with subrepos in an intuitive way"
+homepage = "https://github.com/marcesquerra/esparver"
+exclude = [
+  "nix/*",
+  ".envrc",
+  "shell.nix"
+]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[[bin]]
+name = "ged"
+path = "src/main.rs"
 
 [dependencies]
