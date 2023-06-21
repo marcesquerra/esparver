@@ -43,6 +43,16 @@ let
     src = sources.cargo-watch;
     cargoSha256 = "sha256-C4uqNMyMQLbU3pBiVAoJriYwQ6q+HmodiOyxEFsVWQI=";
   };
+  git = "${pkgs.git}/bin/git";
+  cargo-next-bin = pkgs.writeShellScriptBin "cargo-next-bin" ''
+    ${rustPackage}/bin/cargo release --sign "$@" patch
+  '';
+  cargo-next = pkgs.writeShellScriptBin "cargo-next" ''
+    ${cargo-next-bin}/bin/cargo-next-bin
+  '';
+  cargo-next-go = pkgs.writeShellScriptBin "cargo-next-go" ''
+    ${cargo-next-bin}/bin/cargo-next-bin --no-confirm --execute
+  '';
 in
   pkgs.mkShell {
     name = "polymono-shell";
@@ -52,6 +62,9 @@ in
       rust-analyzer
       bacon
       cargo-watch
+      pkgs.cargo-release
+      cargo-next
+      cargo-next-go
     ];
     shellHook = ''
       export RUST_SRC_PATH="${rust-src}/lib/rustlib/src/rust/library"

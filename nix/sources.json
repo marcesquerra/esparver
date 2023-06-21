@@ -11,6 +11,19 @@
         "url": "https://github.com/Canop/bacon/archive/972cbb3b7bfea69688a4fefb6f124a2c630bf999.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
+    "cargo-watch": {
+        "branch": "8.x",
+        "description": "Watches over your Cargo project's source.",
+        "homepage": "https://watchexec.github.io/#cargo-watch",
+        "owner": "watchexec",
+        "repo": "cargo-watch",
+        "rev": "b905a3f982f21fcea5cb643f0dad073a0cac4b24",
+        "sha256": "1swvk8yb320q90vg434w2z428iy4b2pbxnv12l5sbm0vlinqwfq7",
+        "type": "tarball",
+        "url": "https://github.com/watchexec/cargo-watch/archive/b905a3f982f21fcea5cb643f0dad073a0cac4b24.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz",
+        "version": "v8.4.0"
+    },
     "niv": {
         "branch": "master",
         "description": "Easy dependency management for Nix projects",
@@ -24,29 +37,16 @@
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {
-        "branch": "release-22.11",
+        "branch": "release-23.05",
         "description": "Nix Packages collection",
         "homepage": "",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "dbe7211a802a8798420c753ce181578653d31be7",
-        "sha256": "1l4dqkwkgm3v3cn35bd2yy244akghnqlm21v02ma82z6wx3jj469",
+        "rev": "876181e3ae452cc6186486f6f7300a8a6de237cb",
+        "sha256": "1dnbk79h755i546sf1apmh0r1fpmdsvdnqkdcci41mw07i1vwyym",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/dbe7211a802a8798420c753ce181578653d31be7.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/876181e3ae452cc6186486f6f7300a8a6de237cb.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "cargo-watch": {
-        "branch": "8.x",
-        "description": "Watches over your Cargo project's source.",
-        "homepage": "https://watchexec.github.io/#cargo-watch",
-        "owner": "watchexec",
-        "repo": "cargo-watch",
-        "rev": "b905a3f982f21fcea5cb643f0dad073a0cac4b24",
-        "sha256": "1swvk8yb320q90vg434w2z428iy4b2pbxnv12l5sbm0vlinqwfq7",
-        "type": "tarball",
-        "url": "https://github.com/watchexec/cargo-watch/archive/b905a3f982f21fcea5cb643f0dad073a0cac4b24.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz",
-        "version": "v8.4.0"
     },
     "rust-analyzer": {
         "branch": "master",
