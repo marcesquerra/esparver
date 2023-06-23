@@ -6,7 +6,7 @@ let
   pkgs = import sources.nixpkgs { inherit overlays ; config = { allowUnfree = true;}; };
 in
 let
-  rustChannel = (pkgs.rust-bin.stable."1.69.0");
+  rustChannel = (pkgs.rust-bin.stable."1.70.0");
   rustPackage = rustChannel.default;
   rust-src = rustChannel.rust-src;
   rustPlatform = pkgs.makeRustPlatform{
