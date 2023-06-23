@@ -16,3 +16,6 @@ name = "ged"
 path = "src/main.rs"
 
 [dependencies]
+carapace_spec_clap = "0.1.11"
+clap = "4.3.5"
+clap_complete = "4.3.1"
