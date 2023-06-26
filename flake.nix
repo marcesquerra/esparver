@@ -72,6 +72,9 @@ rec {
         checks = {
           inherit esparver;
         };
+        apps.default = flake-utils.lib.mkApp {
+          drv = esparver;
+        };
         packages = rec {
           inherit bacon rustPackage rust-src rust-analyzer cargo-watch esparver;
           default = esparver;
