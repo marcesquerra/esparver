@@ -31,7 +31,7 @@ let
   '';
 in
   pkgs.mkShell {
-    name = "polymono-shell";
+    name = "esparver-shell";
     nativeBuildInputs = [
       niv
       rustPackage
@@ -40,6 +40,7 @@ in
       cargo-next
       cargo-next-go
       flake.bacon
+      flake.rust-analyzer
     ];
     shellHook = ''
       export RUST_SRC_PATH="${rust-src}/lib/rustlib/src/rust/library"

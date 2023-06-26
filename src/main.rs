@@ -1,7 +1,9 @@
 use carapace_spec_clap::Spec;
 use clap::builder::PossibleValue;
-use clap::ValueEnum;
-use clap::{value_parser, Arg, ArgAction, Command, ValueHint};
+use clap::{
+    crate_version, value_parser, Arg, ArgAction, Args, Command, Parser, Subcommand, ValueHint,
+};
+use clap::{CommandFactory, ValueEnum};
 use clap_complete::{generate, Generator, Shell};
 use std::fmt::Display;
 use std::io;
@@ -21,22 +23,6 @@ impl Display for Target {
             .get_name()
             .fmt(f)
     }
-}
-
-fn build_cli() -> Command {
-    Command::new("ged")
-        .arg(
-            Arg::new("file")
-                .help("some input file")
-                .value_hint(ValueHint::AnyPath),
-        )
-        .arg(
-            Arg::new("generator")
-                .help("generate code complation")
-                .long("generate")
-                .action(ArgAction::Set)
-                .value_parser(value_parser!(Target)),
-        )
 }
 
 // Hand-rolled so it can work even when `derive` feature is disabled
@@ -60,6 +46,24 @@ impl ValueEnum for Target {
     }
 }
 
+/// Here's my app!
+#[derive(Debug, Parser)]
+#[clap(name = "ged", version)]
+#[command(arg_required_else_help = true)]
+pub struct Arguments {
+    // #[clap(flatten)]
+    // global_opts: GlobalOpts,
+    #[clap(subcommand)]
+    command: GedCommand,
+}
+
+#[derive(Debug, Subcommand)]
+enum GedCommand {
+    /// Help message for read.
+    #[clap(hide = true)]
+    GenCompleter { completer: Target },
+}
+
 fn print_completions(target: Target, cmd: &mut Command) {
     match target {
         Target::AShell(gen) => generate(gen, cmd, cmd.get_name().to_string(), &mut io::stdout()),
@@ -68,11 +72,10 @@ fn print_completions(target: Target, cmd: &mut Command) {
 }
 
 fn main() {
-    let matches = build_cli().get_matches();
+    let args = Arguments::parse();
+    let mut cmd: Command = Arguments::command_for_update();
 
-    if let Some(target) = matches.get_one::<Target>("generator").copied() {
-        let mut cmd = build_cli();
-        eprintln!("Generating completion file for {target}...");
-        print_completions(target, &mut cmd);
-    }
+    match args.command {
+        GedCommand::GenCompleter { completer } => print_completions(completer, &mut cmd),
+    };
 }
