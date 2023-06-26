@@ -54,7 +54,7 @@ rec {
         cargo-watch = cargoInstall cargo-watch-src {
           doCheck = false;
         };
-        esparver = craneLib.buildPackage {
+        esparver-package = craneLib.buildPackage {
           src = craneLib.cleanCargoSource (craneLib.path ./.);
 
           # Tests currently need to be run via `cargo wasi` which
@@ -70,13 +70,15 @@ rec {
         };
       in {
         checks = {
-          inherit esparver;
+          esparver = esparver-package;
         };
-        apps.default = flake-utils.lib.mkApp {
-          drv = esparver;
+        apps = rec {
+          esparver = flake-utils.lib.mkApp { drv = esparver-package; };
+          default = esparver;
         };
         packages = rec {
-          inherit bacon rustPackage rust-src rust-analyzer cargo-watch esparver;
+          inherit bacon rustPackage rust-src rust-analyzer cargo-watch;
+          esparver = esparver-package;
           default = esparver;
         };
       }
