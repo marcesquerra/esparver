@@ -1,4 +1,14 @@
 let
+  flake = (import
+    (
+      let lock = builtins.fromJSON (builtins.readFile ./flake.lock); in
+      fetchTarball {
+        url = "https://github.com/edolstra/flake-compat/archive/${lock.nodes.flake-compat.locked.rev}.tar.gz";
+        sha256 = lock.nodes.flake-compat.locked.narHash;
+      }
+    )
+    { src = ./.; }
+  ).defaultNix.packages.x86_64-linux;
   sources = import ./nix/sources.nix;
   rust-overlay = import sources.rust-overlay;
   overlays = [rust-overlay];
@@ -6,43 +16,9 @@ let
   pkgs = import sources.nixpkgs { inherit overlays ; config = { allowUnfree = true;}; };
 in
 let
-  rustChannel = (pkgs.rust-bin.stable."1.70.0");
-  rustPackage = rustChannel.default;
-  rust-src = rustChannel.rust-src;
-  rustPlatform = pkgs.makeRustPlatform{
-      cargo = rustPackage;
-      rustc = rustPackage;
-    };
-  getFromCargo = {src, cargoSha256, nativeBuildInputs ? [], cargoBuildFlags ? []} :
-    let
-      lib = pkgs.lib;
-      asName = candidates :
-        let
-          ts = e: if (builtins.isAttrs e) && (builtins.hasAttr "name" e) && e.name != null then e.name else toString e;
-          stringCandidates = map ts candidates;
-          wholeString = lib.concatStrings stringCandidates;
-        in
-          builtins.hashString "sha256" wholeString;
-    in
-      rustPlatform.buildRustPackage rec {
-        inherit src cargoSha256 nativeBuildInputs cargoBuildFlags;
-        pname = "cargo-${asName [src]}";
-        version = "N/A";
-        doCheck = false;
-      };
-  rust-analyzer = getFromCargo {
-    src = sources.rust-analyzer;
-    cargoSha256 = "sha256-gmFgGYt2aSxz5mBQqr5yCc36ZzcRXpeWjD3RZGk281A=";
-  };
-  bacon = getFromCargo {
-    src = sources.bacon;
-    cargoSha256 = "sha256-6eLsj7YY5bVNw6UeLleiftFr5zJh+9b7vrdv7ivBvlw=";
-  };
+  rustPackage = flake.rustPackage;
+  rust-src = flake.rust-src;
   niv = ((import sources.niv) {}).niv;
-  cargo-watch = getFromCargo {
-    src = sources.cargo-watch;
-    cargoSha256 = "sha256-C4uqNMyMQLbU3pBiVAoJriYwQ6q+HmodiOyxEFsVWQI=";
-  };
   git = "${pkgs.git}/bin/git";
   cargo-next-bin = pkgs.writeShellScriptBin "cargo-next-bin" ''
     ${rustPackage}/bin/cargo release --sign "$@" patch
@@ -59,12 +35,11 @@ in
     nativeBuildInputs = [
       niv
       rustPackage
-      rust-analyzer
-      bacon
-      cargo-watch
+      flake.cargo-watch
       pkgs.cargo-release
       cargo-next
       cargo-next-go
+      flake.bacon
     ];
     shellHook = ''
       export RUST_SRC_PATH="${rust-src}/lib/rustlib/src/rust/library"
