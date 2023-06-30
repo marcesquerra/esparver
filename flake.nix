@@ -14,7 +14,7 @@ rec {
       flake = false;
     };
     crane = {
-      url = "github:ipetkov/crane";
+      url = "github:ipetkov/crane/v0.12.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     rust-analyzer-src = rec {
@@ -77,9 +77,12 @@ rec {
           default = esparver;
         };
         packages = rec {
-          inherit bacon rustPackage rust-src rust-analyzer cargo-watch;
           esparver = esparver-package;
           default = esparver;
+        };
+        devShells.default = import ./nix/flake-shell.nix {
+          inherit rustPackage rust-src cargo-watch bacon rust-analyzer;
+          packages = pkgs;
         };
       }
     );  
