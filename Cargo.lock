@@ -163,7 +163,7 @@ dependencies = [
 
 [[package]]
 name = "esparver"
-version = "0.0.5"
+version = "0.0.6"
 dependencies = [
  "carapace_spec_clap",
  "clap",
