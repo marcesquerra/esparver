@@ -68,6 +68,9 @@ rec {
             pkgs.libiconv
           ];
         };
+        carapace-spec = pkgs.runCommand "carapace-spec" {} ''
+          ${esparver-package}/bin/ged gen-completer carapace > $out
+        '';
       in {
         checks = {
           esparver = esparver-package;
@@ -77,6 +80,7 @@ rec {
           default = esparver;
         };
         packages = rec {
+          inherit carapace-spec;
           esparver = esparver-package;
           default = esparver;
         };
