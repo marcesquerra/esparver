@@ -25,10 +25,11 @@ rec {
       url = "github:watchexec/cargo-watch/8.x"; 
       flake = false;
     };
-
+    nickel.url = "github:tweag/nickel/1.0.0";
+    topiary.url = "github:tweag/topiary/v0.2.3";
   };
 
-  outputs = { self, nixpkgs, flake-utils, rust-overlay, bacon-src, crane, rust-analyzer-src, cargo-watch-src, ... }:
+  outputs = { self, nixpkgs, flake-utils, rust-overlay, bacon-src, crane, rust-analyzer-src, cargo-watch-src, nickel, topiary, ... }:
 
     flake-utils.lib.eachDefaultSystem (system:
 
@@ -85,7 +86,7 @@ rec {
           default = esparver;
         };
         devShells.default = import ./nix/flake-shell.nix {
-          inherit rustPackage rust-src cargo-watch bacon rust-analyzer;
+          inherit system rustPackage rust-src cargo-watch bacon rust-analyzer nickel topiary;
           packages = pkgs;
         };
       }

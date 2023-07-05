@@ -5,8 +5,15 @@ use clap::{
 };
 use clap::{CommandFactory, ValueEnum};
 use clap_complete::{generate, Generator, Shell};
+use nickel_lang::deserialize;
+use nickel_lang::eval::cache::CacheImpl;
+use nickel_lang::program::Program;
+use nickel_lang::term::RichTerm;
+use serde::Deserialize;
+use serde::Serialize;
 use std::fmt::Display;
 use std::io;
+use std::path::PathBuf;
 
 /// Shell with auto-generated completion script available.
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
@@ -71,11 +78,33 @@ fn print_completions(target: Target, cmd: &mut Command) {
     }
 }
 
-fn main() {
-    let args = Arguments::parse();
-    let mut cmd: Command = Arguments::command_for_update();
+#[derive(Serialize, Deserialize, Debug)]
+struct Configuration {
+    pub foo: String,
+}
 
-    match args.command {
-        GedCommand::GenCompleter { completer } => print_completions(completer, &mut cmd),
-    };
+fn main() {
+    // let args = Arguments::parse();
+    // let mut cmd: Command = Arguments::command_for_update();
+
+    // match args.command {
+    //     GedCommand::GenCompleter { completer } => print_completions(completer, &mut cmd),
+    // };
+
+    let path = PathBuf::from(r"./example.ncl");
+    let program_result: std::io::Result<Program<CacheImpl>> = Program::new_from_file(path);
+    let mut program: Program<CacheImpl> = program_result.unwrap();
+    let rt: RichTerm = program.eval_full_for_export().map(RichTerm::from).unwrap();
+
+    let t = Configuration::deserialize(rt);
+
+    println!("{:?}", t);
+
+    // nickel_lang::serialize
+    // nickel_lang::deserialize
+    // Deserialize::deserialize()
+    // serde::Serializer::serialize(rt)
+    // serde::Serializer::
+    // serialize()
+    // serde_json::from_str("");
 }

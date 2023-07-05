@@ -1,0 +1,9 @@
+[[language]]
+name = "nickel"
+scope = "source.ncl"
+injection-regex = "nickel"
+file-types = ["nickel", "ncl"]
+comment-token = "#"
+indent = { tab-width = 2, unit = "  " }
+formatter = { command = "topiary" , args = ["-l", "nickel"] }
+language-server = { command = "nls" }

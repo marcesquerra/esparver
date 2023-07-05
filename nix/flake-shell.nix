@@ -1,4 +1,4 @@
-{ packages, rustPackage, rust-src, cargo-watch, bacon, rust-analyzer } :
+{ system, packages, rustPackage, rust-src, cargo-watch, bacon, rust-analyzer, nickel, topiary } :
 let
   git = "${packages.git}/bin/git";
   cargo-next-bin = packages.writeShellScriptBin "cargo-next-bin" ''
@@ -21,6 +21,9 @@ in
       cargo-next-go
       bacon
       rust-analyzer
+      nickel.packages.${system}.default
+      nickel.packages.${system}.lsp-nls
+      topiary.packages.${system}.default
     ];
     shellHook = ''
       export RUST_SRC_PATH="${rust-src}/lib/rustlib/src/rust/library"
