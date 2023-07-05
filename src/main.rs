@@ -1,3 +1,5 @@
+mod nickelodeon;
+
 use carapace_spec_clap::Spec;
 use clap::builder::PossibleValue;
 use clap::{
@@ -14,6 +16,8 @@ use serde::Serialize;
 use std::fmt::Display;
 use std::io;
 use std::path::PathBuf;
+
+use crate::nickelodeon::load_configuration;
 
 /// Shell with auto-generated completion script available.
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
@@ -78,7 +82,7 @@ fn print_completions(target: Target, cmd: &mut Command) {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Default)]
 struct Configuration {
     pub foo: String,
 }
@@ -91,12 +95,12 @@ fn main() {
     //     GedCommand::GenCompleter { completer } => print_completions(completer, &mut cmd),
     // };
 
-    let path = PathBuf::from(r"./example.ncl");
-    let program_result: std::io::Result<Program<CacheImpl>> = Program::new_from_file(path);
-    let mut program: Program<CacheImpl> = program_result.unwrap();
-    let rt: RichTerm = program.eval_full_for_export().map(RichTerm::from).unwrap();
+    // let path = PathBuf::from(r"./example.ncl");
+    // let program_result: std::io::Result<Program<CacheImpl>> = Program::new_from_file(path);
+    // let mut program: Program<CacheImpl> = program_result.unwrap();
+    // let rt: RichTerm = program.eval_full_for_export().map(RichTerm::from).unwrap();
 
-    let t = Configuration::deserialize(rt);
+    let t = load_configuration::<Configuration>("esparver", None); //Configuration::deserialize(rt);
 
     println!("{:?}", t);
 

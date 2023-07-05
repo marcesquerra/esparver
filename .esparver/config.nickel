@@ -1,0 +1,4 @@
+{
+  foo = "bard",
+  baz = "thing"
+}

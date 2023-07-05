@@ -341,6 +341,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "config-finder"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5c9eed8d7ffda406dec01e84fda180eb997a4dc1f61a72b2d8c2fff8c9833e07"
+dependencies = [
+ "dirs-sys",
+]
+
+[[package]]
 name = "coolor"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -630,6 +639,7 @@ dependencies = [
  "carapace_spec_clap",
  "clap 4.3.8",
  "clap_complete",
+ "config-finder",
  "nickel-lang",
  "serde",
  "serde_json",
