@@ -62,6 +62,10 @@ impl ValueEnum for Target {
 #[clap(name = "ged", version)]
 #[command(arg_required_else_help = true)]
 pub struct Arguments {
+    /// Sets a custom config file
+    #[arg(short, long, value_name = "FILE", global = true)]
+    config: Option<PathBuf>,
+
     // #[clap(flatten)]
     // global_opts: GlobalOpts,
     #[clap(subcommand)]
@@ -72,7 +76,10 @@ pub struct Arguments {
 enum GedCommand {
     /// Help message for read.
     #[clap(hide = true)]
-    GenCompleter { completer: Target },
+    GenCompleter {
+        completer: Target,
+    },
+    ShowConfiguration,
 }
 
 fn print_completions(target: Target, cmd: &mut Command) {
@@ -88,27 +95,13 @@ struct Configuration {
 }
 
 fn main() {
-    // let args = Arguments::parse();
-    // let mut cmd: Command = Arguments::command_for_update();
+    let args = Arguments::parse();
+    let mut cmd: Command = Arguments::command_for_update();
 
-    // match args.command {
-    //     GedCommand::GenCompleter { completer } => print_completions(completer, &mut cmd),
-    // };
+    let configuration = load_configuration::<Configuration>("esparver", args.config); //Configuration::deserialize(rt);
 
-    // let path = PathBuf::from(r"./example.ncl");
-    // let program_result: std::io::Result<Program<CacheImpl>> = Program::new_from_file(path);
-    // let mut program: Program<CacheImpl> = program_result.unwrap();
-    // let rt: RichTerm = program.eval_full_for_export().map(RichTerm::from).unwrap();
-
-    let t = load_configuration::<Configuration>("esparver", None); //Configuration::deserialize(rt);
-
-    println!("{:?}", t);
-
-    // nickel_lang::serialize
-    // nickel_lang::deserialize
-    // Deserialize::deserialize()
-    // serde::Serializer::serialize(rt)
-    // serde::Serializer::
-    // serialize()
-    // serde_json::from_str("");
+    match args.command {
+        GedCommand::GenCompleter { completer } => print_completions(completer, &mut cmd),
+        GedCommand::ShowConfiguration => println!("{:?}", configuration),
+    };
 }
