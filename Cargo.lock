@@ -641,6 +641,7 @@ dependencies = [
  "clap_complete",
  "config-finder",
  "nickel-lang",
+ "nickelodeon",
  "serde",
  "serde_json",
 ]
@@ -1127,6 +1128,57 @@ dependencies = [
  "typed-arena",
  "unicode-segmentation",
  "void",
+]
+
+[[package]]
+name = "nickel-lang-core"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f6ed1e7d9ce3703ee4c6a09322b0ada0238ad8c82d8e1aed1b2e884b37c26d4c"
+dependencies = [
+ "ansi_term",
+ "clap 4.3.8",
+ "codespan",
+ "codespan-reporting",
+ "comrak",
+ "indexmap 1.9.3",
+ "indoc",
+ "lalrpop",
+ "lalrpop-util",
+ "logos",
+ "malachite",
+ "malachite-q",
+ "md-5",
+ "once_cell",
+ "pretty",
+ "regex",
+ "rustyline",
+ "rustyline-derive",
+ "serde",
+ "serde-wasm-bindgen",
+ "serde_json",
+ "serde_yaml",
+ "sha-1",
+ "sha2",
+ "simple-counter",
+ "strip-ansi-escapes",
+ "termimad",
+ "toml",
+ "typed-arena",
+ "unicode-segmentation",
+ "void",
+]
+
+[[package]]
+name = "nickelodeon"
+version = "0.0.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "642f7a9f76b7ff1c3650acb75904091d5855415bd8faa868cc169d8bcd3753ba"
+dependencies = [
+ "config-finder",
+ "nickel-lang-core",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]

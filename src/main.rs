@@ -1,5 +1,3 @@
-mod nickelodeon;
-
 use carapace_spec_clap::Spec;
 use clap::builder::PossibleValue;
 use clap::{
@@ -11,13 +9,12 @@ use nickel_lang::deserialize;
 use nickel_lang::eval::cache::CacheImpl;
 use nickel_lang::program::Program;
 use nickel_lang::term::RichTerm;
+use nickelodeon::load_configuration;
 use serde::Deserialize;
 use serde::Serialize;
 use std::fmt::Display;
 use std::io;
 use std::path::PathBuf;
-
-use crate::nickelodeon::load_configuration;
 
 /// Shell with auto-generated completion script available.
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
@@ -98,7 +95,7 @@ fn main() {
     let args = Arguments::parse();
     let mut cmd: Command = Arguments::command_for_update();
 
-    let configuration = load_configuration::<Configuration>("esparver", args.config); //Configuration::deserialize(rt);
+    let configuration = load_configuration::<Configuration>("esparver", args.config);
 
     match args.command {
         GedCommand::GenCompleter { completer } => print_completions(completer, &mut cmd),
